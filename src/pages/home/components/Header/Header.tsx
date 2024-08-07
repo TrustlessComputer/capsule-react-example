@@ -7,7 +7,7 @@ const Header = () => {
         Capsule Demo App
       </Heading>
       <Text textAlign="center">
-        An onboarding + NFT mint experience, powered by Capsule.
+        An onboarding, powered by Capsule.
       </Text>
       <Text textAlign="center">
         Check it out and let us know what you think!

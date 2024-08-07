@@ -41,7 +41,7 @@ const MainContent = () => {
     updateLoginStatus();
   }, []);
 
-  const link = `https://sepolia.etherscan.io/address/${walletAddress}`;
+  const link = `https://nos-explorer.regtest.trustless.computer/address/${walletAddress}`;
 
   return (
     <>
@@ -70,7 +70,7 @@ const MainContent = () => {
         <VStack>
           <Heading>Instructions</Heading>
           <VStack minW={350}>
-            <FundWallet walletId={walletId} />
+            {/*<FundWallet walletId={walletId} />*/}
             <MintNFT walletAddress={walletAddress} walletId={walletId} />
           </VStack>
           <Button
@@ -85,7 +85,7 @@ const MainContent = () => {
           </Button>
         </VStack>
       )}
-      {loggedIn && <NFT />}
+      {/*{loggedIn && <NFT />}*/}
       <CapsuleModal
         capsule={capsule}
         isOpen={isOpen}

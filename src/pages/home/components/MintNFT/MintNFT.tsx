@@ -7,9 +7,9 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useMintNFT } from "../../../../hooks/api/useMintNFT";
-import { useHasMintedNFT } from "../../../../hooks/api/useHasMintedNFT";
+import { useSendNativeToken } from "../../../../hooks/api/useSendNativeToken";
 import { useNFTStore } from "../../../../stores/useNFTStore";
+import {useHasMintedNFT} from "../../../../hooks/api/useHasMintedNFT";
 
 interface MintNFTProps {
   walletId: string;
@@ -19,18 +19,16 @@ interface MintNFTProps {
 export const MintNFT = ({ walletId, walletAddress }: MintNFTProps) => {
   const toast = useToast();
   const setHasMintedNFT = useNFTStore((state) => state.setHasMintedNFT);
-  const localHasMintedNFT = useNFTStore((state) =>
-    state.hasWalletMintedNFTt(walletId)
-  );
   const { data: hasMintedNFT, isLoading: isHasMintedNFTLoading } =
     useHasMintedNFT(walletAddress, walletId);
+
   const {
     mutate: sendTx,
     isPending: isSendTxPending,
     isSuccess: isSendTxSuccess,
     isError: isSendTxError,
     reset: resetSendTx,
-  } = useMintNFT(walletAddress, walletId);
+  } = useSendNativeToken(walletAddress, walletId);
 
   // Update local storage when api resolves
   useEffect(() => {
@@ -43,7 +41,7 @@ export const MintNFT = ({ walletId, walletAddress }: MintNFTProps) => {
     sendTx(undefined, {
       onSuccess: () => {
         toast({
-          title: "Successfully minted the NFT!",
+          title: "Successfully!",
           status: "success",
           isClosable: true,
         });
@@ -65,12 +63,12 @@ export const MintNFT = ({ walletId, walletAddress }: MintNFTProps) => {
   return (
     <VStack width="100%">
       <HStack width="100%" justifyContent="space-between">
-        <Text>2. Mint the NFT</Text>
+        <Text>1. Send the Native Token</Text>
         <Tooltip
           placement="right"
           color="white"
           label="Congratulations! You have minted the Capsule NFT. Click again to mint again!"
-          isDisabled={!localHasMintedNFT}
+          // isDisabled={!localHasMintedNFT}
         >
           <Button
             width="150px"
@@ -80,7 +78,7 @@ export const MintNFT = ({ walletId, walletAddress }: MintNFTProps) => {
                 ? "red"
                 : isSendTxPending
                 ? "blue"
-                : isSendTxSuccess || localHasMintedNFT
+                : isSendTxSuccess
                 ? "green"
                 : "#080B0F"
             }
@@ -95,9 +93,9 @@ export const MintNFT = ({ walletId, walletAddress }: MintNFTProps) => {
                 ? "Failed!"
                 : isSendTxPending
                 ? "Pending..."
-                : isSendTxSuccess || localHasMintedNFT
-                ? "Minted!"
-                : "Mint NFT!"}
+                : isSendTxSuccess
+                ? "Sent!"
+                : "Send!"}
             </Text>
           </Button>
         </Tooltip>

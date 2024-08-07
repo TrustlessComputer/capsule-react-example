@@ -29,16 +29,18 @@ export const createTransaction = async (
       ? web3.utils.toHex(web3.utils.toWei(value, "ether"))
       : undefined,
     gasLimit: web3.utils.toHex(Number(gasAmount)),
-    maxPriorityFeePerGas: maxPriorityFeePerGas
-      ? web3.utils.toHex(web3.utils.toWei(maxPriorityFeePerGas, "gwei"))
-      : undefined,
-    maxFeePerGas: maxFeePerGas
-      ? web3.utils.toHex(web3.utils.toWei(maxFeePerGas, "gwei"))
-      : undefined,
+    // maxPriorityFeePerGas: maxPriorityFeePerGas
+    //   ? web3.utils.toHex(web3.utils.toWei(maxPriorityFeePerGas, "gwei"))
+    //   : undefined,
+    // maxFeePerGas: maxFeePerGas
+    //   ? web3.utils.toHex(web3.utils.toWei(maxFeePerGas, "gwei"))
+    //   : undefined,
     nonce: web3.utils.toHex(nonce),
     data: functionCallData || deployByteCode || undefined,
     chainId,
     type: 2,
   };
+
+  console.log('SANG TEST: ', tx)
   return tx;
 };

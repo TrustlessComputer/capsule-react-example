@@ -11,36 +11,34 @@ import {
   MINT_PRICE,
   NFT_CONTRACT_ADDRESS,
 } from "../../constants";
-import { ethersSigner } from "../../clients/ethersSigner";
+import {ethersSigner, provider} from "../../clients/ethersSigner";
 import { useNFTStore } from "../../stores/useNFTStore";
 import { HAS_MINTED_NFT_QUERY_KEY } from "./useHasMintedNFT";
 
 const MUTATION_KEY = "MINT_NFT";
 
-export const useMintNFT = (walletAddress: string, walletId: string) => {
+export const useSendNativeToken = (walletAddress: string, walletId: string) => {
   const queryClient = useQueryClient();
   const setHasMintedNFT = useNFTStore((state) => state.setHasMintedNFT);
 
   return useMutation({
     mutationFn: async () => {
-      const nonce = await web3.eth.getTransactionCount(walletAddress);
+      const nonce = await provider.getTransactionCount(walletAddress);
       const tx = await createTransaction(
         walletAddress,
         MINTER_CONTRACT_ADDRESS,
         MINT_PRICE,
-        "140000",
+        "10000000",
         null,
-        "3",
+        "10000000",
         nonce,
         DEFAULT_CHAIN_ID,
-        JSON.stringify(MINTER_CONTRACT_ABI),
-        "mintPublic",
-        [
-          NFT_CONTRACT_ADDRESS,
-          MINTER_FEE_RECIPIENT,
-          MINTER_IF_NOT_PAYER,
-          MINTER_QUANTITY,
-        ],
+        // JSON.stringify(MINTER_CONTRACT_ABI),
+          '',
+        // "mintPublic",
+          '',
+        //
+        [],
         ""
       );
 
